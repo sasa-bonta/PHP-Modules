@@ -15,7 +15,7 @@ class SearchCriteria
      * @param string $name
      * @param string $category
      */
-    public function __construct($page, $limit, $name, $category)
+    public function __construct($page = 1, $limit = 10, $name = '', $category = '')
     {
         $this->page = $page;
         $this->limit = $limit;
