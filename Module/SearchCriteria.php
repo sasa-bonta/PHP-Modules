@@ -18,8 +18,8 @@ class SearchCriteria
      */
     public function __construct($page = 1, $limit = 10, $name = '', $category = '')
     {
-        $this->page = $page;
-        $this->limit = $limit;
+        $this->page = $page;    # @todo SearchCriteriaInvalidPageException
+        $this->limit = $limit;  # @todo SearchCriteriaInvalidLimitException
         $this->name = $name;
         $this->category = $category;
     }
@@ -35,7 +35,7 @@ class SearchCriteria
     /**
      * @param int $page
      */
-    public function setPage($page)
+    public function setPage($page)    # @todo SearchCriteriaInvalidPageException
     {
         $this->page = $page;
     }
@@ -51,7 +51,7 @@ class SearchCriteria
     /**
      * @param int $limit
      */
-    public function setLimit($limit)
+    public function setLimit($limit)   # @todo SearchCriteriaInvalidLimitException
     {
         $this->limit = $limit;
     }

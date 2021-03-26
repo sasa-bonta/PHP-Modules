@@ -27,7 +27,7 @@ class ProductRepositoryFS implements ProductCatalogServiceInterface
             $prod = $contents[$i];
             return new Product($prod['name'], $prod['code'], $prod['price'], $prod['category']);
         } else {
-            return NULL;    # @todo exception
+            return NULL;    # @todo ProductNotFoundException
         }
     }
 
