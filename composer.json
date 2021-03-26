@@ -1,0 +1,10 @@
+{
+    "name": "abonta/module",
+    "authors": [
+        {
+            "name": "sasa-bonta",
+            "email": "bonta2000@mail.ru"
+        }
+    ],
+    "require": {}
+}
