@@ -2,7 +2,7 @@
 
 require_once('Product.php');
 require_once('ProductRepositoryFS.php');
-require_once ('SearchCriteria.php');
+require_once('SearchCriteria.php');
 
 $pr = new ProductRepositoryFS();
 $sc = new SearchCriteria();
