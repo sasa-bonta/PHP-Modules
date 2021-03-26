@@ -4,17 +4,17 @@ use Module\ProductModule\Product;
 use Module\ProductModule\ProductRepositoryFS;
 use Module\ProductModule\SearchCriteria;
 
-require_once '/home/abonta/PhpstormProjects/PHP-Modules/vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 $pr = new ProductRepositoryFS();
-$p1 = new Product("test12", "134", 45.85, "tool");
+$p1 = new Product("testUPDATED", "134", 45.85, "tool");
 $sc = new SearchCriteria();
 
 # Search Product ~ OK should add collection
-$sc->setName('test1');
-$sc->setCategory('toy');
-$searchProd = $pr->searchProduct($sc);
-print_r($searchProd);
+//$sc->setName('test1');
+//$sc->setCategory('toy');
+//$searchProd = $pr->searchProduct($sc);
+//print_r($searchProd);
 
 
 # Create Product OK
@@ -34,12 +34,19 @@ print_r($searchProd);
 //else echo "True\n";
 
 
+# Update Product OK
+//$ptest = $pr->updateProduct($p1);
+//if (!$ptest) echo "False\n";
+//else echo "True\n";
+
+#
+
+# ============================================== #
 # Test Getters OK
 //echo $p1->getName() ."\n";
 //echo $p1->getCode() ."\n";
 //echo $p1->getPrice() ."\n";
 //echo $p1->getCategory() ."\n";
-
 
 # Test implemented methods OK
 //$pr->getProductByCode($p1->getCode());

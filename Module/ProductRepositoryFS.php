@@ -4,25 +4,37 @@ namespace Module\ProductModule;
 
 class ProductRepositoryFS implements ProductCatalogServiceInterface
 {
+    private array $contents = [];
+
+
 
     ### Implemented functions
 
-    public function getProductByCode(string $productCode)
+    /**
+     * ProductRepositoryFS constructor.     *
+     */
+    public function __construct()
+    {
+        $this->contents = $this->updateProductsArray();
+    }
+
+    public function getProductByCode(string $productCode): Product
     {  # Add ProductNotFoundException
-        $contents = $this->readProductsArray();
+        $contents = $this->contents;
         $i = array_search($productCode, array_column($contents, 'code'));
 
         if ($i !== FALSE) {
-            return $contents[$i];
+            $prod = $contents[$i];
+            return new Product($prod['name'], $prod['code'], $prod['price'], $prod['category']);
         } else {
-            return NULL;    ### Add exception
+            return NULL;    # @todo exception
         }
     }
 
     # What the Product Collection ???
     public function searchProduct(SearchCriteria $sc)  // Here would be a good idea to use Decorator Pattern
     {        # Add SearchCriteriaInvalidPageException and  SearchCriteriaInvalidLimitException
-        $contents = $this->readProductsArray();
+        $contents = $this->contents;
         $arrContain = [];
 
         # Return all if none is set
@@ -60,25 +72,31 @@ class ProductRepositoryFS implements ProductCatalogServiceInterface
         return $arrContain;
     }
 
-    public function createProduct(Product $product)
+    public function createProduct(Product $product) : bool
     { # Add ProductCodeDuplicateException
 
         if (!($this->isCodePresent($product->getCode()))) {
             $this->addNewProduct($product);
             return TRUE;
         } else {
-            return FALSE;  ### Add exception
+            return FALSE;  # @todo exception
         }
     }
 
-    public function updateProduct(Product $product)
+    public function updateProduct(Product $product):bool
     {
-        echo "+ update Product \n";
-        print_r($product);
-        echo "\n";
+        # @todo implementation
+        if ($this->isCodePresent($product->getCode())) {
+            $this->deleteProduct($product->getCode());
+            $this->addNewProduct($product);
+            $this->contents = $this->updateProductsArray();
+            return TRUE;
+        } else {
+            return false; # @todo exception
+        }
     }
 
-    public function deleteProductByCode(string $productCode)
+    public function deleteProductByCode(string $productCode): bool
     {
         if ($this->isCodePresent($productCode)) {
             $this->deleteProduct($productCode);
@@ -90,7 +108,7 @@ class ProductRepositoryFS implements ProductCatalogServiceInterface
 
     ### Class functions
 
-    public function addNewProduct(Product $product)
+    private function addNewProduct(Product $product)
     {
         $product = json_encode($product);
         $fp = fopen('productsFS.file', 'a+');
@@ -99,12 +117,13 @@ class ProductRepositoryFS implements ProductCatalogServiceInterface
         fwrite($fp, ",");
         fwrite($fp, $product . "]");
         fclose($fp);
+        $this->contents = $this->updateProductsArray();
         #echo "+ new Product : " .$product ."\n";
     }
 
-    public function isCodePresent(string $code)
+    private function isCodePresent(string $code): bool
     {
-        $contents = $this->readProductsArray();
+        $contents = $this->contents;
         $contents = array_column($contents, 'code');
         if (in_array($code, $contents, FALSE)) {
             #echo "not added \n";
@@ -115,18 +134,19 @@ class ProductRepositoryFS implements ProductCatalogServiceInterface
         }
     }
 
-    public function deleteProduct(string $code)
+    private function deleteProduct(string $code)
     {
-        $contents = $this->readProductsArray();
+        $contents = $this->contents;
         $i = array_search($code, array_column($contents, 'code'));
         unset($contents[$i]);
         $contents = json_encode($contents);
         $fp = fopen("productsFS.file", "w");
         fwrite($fp, $contents);
         fclose($fp);
+        $this->contents = $this->updateProductsArray();
     }
 
-    public function readProductsArray()
+    private function updateProductsArray()
     {
         $fp = fopen("productsFS.file", "rb");
         $contents = stream_get_contents($fp);
@@ -134,7 +154,7 @@ class ProductRepositoryFS implements ProductCatalogServiceInterface
         return json_decode($contents, TRUE);
     }
 
-    public function searchByColumn($pr1, string $column, string $name)
+    private function searchByColumn($pr1, string $column, string $name): bool
     {
         if (strpos($pr1[$column], $name) !== FALSE) {
             return TRUE;
@@ -143,7 +163,7 @@ class ProductRepositoryFS implements ProductCatalogServiceInterface
         }
     }
 
-    public function searchNameCategory($pr1, string $col1,  string $name, string $col2, string $category)
+    private function searchNameCategory($pr1, string $col1,  string $name, string $col2, string $category): bool
     {
         if ($this->searchByColumn($pr1, $col1,  $name) && $this->searchByColumn($pr1, $col2,  $category)) {
             return TRUE;
