@@ -1,8 +1,6 @@
 <?php
 
-require_once('Product.php');
-require_once('ProductRepositoryFS.php');
-require_once('SearchCriteria.php');
+require ('composer.json');
 
 $pr = new ProductRepositoryFS();
 $sc = new SearchCriteria();

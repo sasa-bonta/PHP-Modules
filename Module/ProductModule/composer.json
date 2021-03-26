@@ -10,7 +10,7 @@
     "description": "First Module",
     "autoload": {
         "psr-4": {
-            "Module\\ProductModule\\": ""
+            "Module\\ProductModule": ""
         }
     }
 }

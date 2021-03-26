@@ -1,9 +1,7 @@
 <?php
 
-
-require_once('Product.php');
-require_once('ProductCatalogServiceInterface.php');
-require_once('SearchCriteria.php');
+require ('composer.json');
+namespace\ProductRepositoryFS::class;
 
 class ProductRepositoryFS implements ProductCatalogServiceInterface
 {
