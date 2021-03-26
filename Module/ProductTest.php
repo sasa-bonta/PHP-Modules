@@ -7,14 +7,15 @@ use Module\ProductModule\SearchCriteria;
 require_once '../vendor/autoload.php';
 
 $pr = new ProductRepositoryFS();
-$p1 = new Product("testUPDATED", "134", 45.85, "tool");
+$p1 = new Product("test14", "136", 85.14, "book");
 $sc = new SearchCriteria();
 
 # Search Product ~ OK should add collection
-//$sc->setName('test1');
-//$sc->setCategory('toy');
-//$searchProd = $pr->searchProduct($sc);
-//print_r($searchProd);
+$sc->setName('');
+$sc->setCategory('');
+$sc->setPage(2);
+$searchProd = $pr->searchProduct($sc);
+print_r($searchProd->getProductsToDisplay());
 
 
 # Create Product OK
@@ -39,7 +40,6 @@ $sc = new SearchCriteria();
 //if (!$ptest) echo "False\n";
 //else echo "True\n";
 
-#
 
 # ============================================== #
 # Test Getters OK

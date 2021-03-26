@@ -6,10 +6,6 @@ class ProductRepositoryFS implements ProductCatalogServiceInterface
 {
     private array $contents = [];
 
-
-
-    ### Implemented functions
-
     /**
      * ProductRepositoryFS constructor.     *
      */
@@ -17,6 +13,10 @@ class ProductRepositoryFS implements ProductCatalogServiceInterface
     {
         $this->contents = $this->updateProductsArray();
     }
+
+
+    ### Implemented public functions
+
 
     public function getProductByCode(string $productCode): Product
     {  # Add ProductNotFoundException
@@ -32,7 +32,7 @@ class ProductRepositoryFS implements ProductCatalogServiceInterface
     }
 
     # What the Product Collection ???
-    public function searchProduct(SearchCriteria $sc)  // Here would be a good idea to use Decorator Pattern
+    public function searchProduct(SearchCriteria $sc): ProductCollection  // Here would be a good idea to use Decorator Pattern
     {        # Add SearchCriteriaInvalidPageException and  SearchCriteriaInvalidLimitException
         $contents = $this->contents;
         $arrContain = [];
@@ -69,7 +69,10 @@ class ProductRepositoryFS implements ProductCatalogServiceInterface
             }
         }
 
-        return $arrContain;
+        $start = ($sc->getPage() - 1) * $sc->getLimit();
+        $arrContain = array_slice($arrContain, $start, $sc->getLimit());
+
+        return new ProductCollection($arrContain);
     }
 
     public function createProduct(Product $product) : bool
@@ -106,7 +109,9 @@ class ProductRepositoryFS implements ProductCatalogServiceInterface
         }
     }
 
-    ### Class functions
+
+    ### Class private functions
+
 
     private function addNewProduct(Product $product)
     {
