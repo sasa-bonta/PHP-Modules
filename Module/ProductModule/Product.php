@@ -1,7 +1,8 @@
 <?php
 
+namespace Module\ProductModule;
 
-class Product implements JsonSerializable{
+class Product implements \JsonSerializable {
     private string $name;
     private string $code;
     private float $price;

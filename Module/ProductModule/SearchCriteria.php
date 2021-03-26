@@ -1,5 +1,6 @@
 <?php
 
+namespace Module\ProductModule;
 
 class SearchCriteria
 {

@@ -1,16 +1,20 @@
 <?php
 
-require ('composer.json');
+use Module\ProductModule\Product;
+use Module\ProductModule\ProductRepositoryFS;
+use Module\ProductModule\SearchCriteria;
+
+require_once '/home/abonta/PhpstormProjects/PHP-Modules/vendor/autoload.php';
 
 $pr = new ProductRepositoryFS();
-$sc = new SearchCriteria();
 $p1 = new Product("test12", "134", 45.85, "tool");
+$sc = new SearchCriteria();
 
 # Search Product ~ OK should add collection
-//$sc->setName('test1');
-//$sc->setCategory('toy');
-//$searchProd = $pr->searchProduct($sc);
-//print_r($searchProd);
+$sc->setName('test1');
+$sc->setCategory('toy');
+$searchProd = $pr->searchProduct($sc);
+print_r($searchProd);
 
 
 # Create Product OK

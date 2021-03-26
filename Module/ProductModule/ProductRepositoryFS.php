@@ -1,7 +1,6 @@
 <?php
 
-require ('composer.json');
-namespace\ProductRepositoryFS::class;
+namespace Module\ProductModule;
 
 class ProductRepositoryFS implements ProductCatalogServiceInterface
 {
