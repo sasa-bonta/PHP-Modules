@@ -2,7 +2,7 @@
 
 namespace Module\ProductModule;
 
-class ProductRepositoryFS implements ProductCatalogServiceInterface
+class ProductRepositoryFS implements ProductCatalogRepositoryInterface
 {
     private array $contents = [];
 
@@ -31,7 +31,7 @@ class ProductRepositoryFS implements ProductCatalogServiceInterface
         if ($i !== FALSE) {
             $prod = $contents[$i];
             return new Product($prod['name'], $prod['code'], $prod['price'], $prod['category']);
-        } else throw new ProductNotFoundException("\n---Product Not Found\n");
+        } else throw new ProductNotFoundException("\n---Product Not Found! Repo\n");
     }
 
     public function searchProduct(SearchCriteria $sc): ProductCollection
@@ -62,7 +62,7 @@ class ProductRepositoryFS implements ProductCatalogServiceInterface
         if (!($this->isCodePresent($product->getCode()))) {
             $this->addNewProduct($product);
             return TRUE;
-        } else throw new ProductCodeDuplicateException("\n---Duplicated code!\n");
+        } else throw new ProductCodeDuplicateException("\n---Duplicated code! Repo\n");
     }
 
     public function updateProduct(Product $product):bool

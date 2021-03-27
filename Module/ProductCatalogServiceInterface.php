@@ -10,5 +10,4 @@ interface ProductCatalogServiceInterface {
     public function createProduct(Product $product): bool;  # @todo ProductCodeDuplicateException
     public function updateProduct(Product $product): bool;   # @todo ProductNotFoundException
     public function deleteProductByCode(string $productCode): bool;
-
 }
