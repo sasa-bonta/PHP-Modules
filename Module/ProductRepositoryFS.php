@@ -99,7 +99,7 @@ class ProductRepositoryFS implements ProductCatalogServiceInterface
         $contents = $this->contents;
         $codes = array_column($contents, 'code');
         if (in_array($code, $codes, FALSE)) return TRUE;
-        else return FALSE; # @todo add exception ?
+        else return FALSE;
     }
 
     private function deleteProduct(string $code)
