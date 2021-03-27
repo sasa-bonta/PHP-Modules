@@ -4,13 +4,9 @@ namespace Module\ProductModule;
 
 class ProductRepositoryFS implements ProductCatalogServiceInterface
 {
-
-
-    ### Constructor && Destructor
-
-
     private array $contents = [];
 
+    ### Constructor && Destructor
     /**
      * ProductRepositoryFS constructor.     *
      */
