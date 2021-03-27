@@ -1,13 +1,1 @@
-[{"name":"test2","code":"124","price":40.55,"category":"tools"},
-  {"name":"test3","code":"125","price":30.55,"category":"book"},
-  {"name":"test4","code":"126","price":75.33,"category":"pen"},
-  {"name":"test5","code":"127","price":71.85,"category":"toy"},
-  {"name":"test6","code":"128","price":95.24,"category":"toy"},
-  {"name":"test7","code":"129","price":75.15,"category":"tool"},
-  {"name":"test8","code":"130","price":84.24,"category":"tool"},
-  {"name":"test9","code":"131","price":45.85,"category":"tool"},
-  {"name":"test10","code":"132","price":45.85,"category":"tool"},
-  {"name":"test11","code":"133","price":45.85,"category":"toy"},
-  {"name":"testUPDATED","code":"134","price":45.85,"category":"tool"},
-  {"name":"test13","code":"135","price":45.85,"category":"tool"},
-  {"name":"test14","code":"136","price":85.14,"category":"book"}]
+{"0":{"name":"test2","code":"124","price":40.55,"category":"tools"},"1":{"name":"test3","code":"125","price":30.55,"category":"book"},"2":{"name":"test4","code":"126","price":75.33,"category":"pen"},"3":{"name":"test5","code":"127","price":71.85,"category":"toy"},"4":{"name":"test6","code":"128","price":95.24,"category":"toy"},"5":{"name":"test7","code":"129","price":75.15,"category":"tool"},"6":{"name":"test8","code":"130","price":84.24,"category":"tool"},"7":{"name":"test9","code":"131","price":45.85,"category":"tool"},"8":{"name":"test10","code":"132","price":45.85,"category":"tool"},"9":{"name":"test11","code":"133","price":45.85,"category":"toy"},"10":{"name":"testUPDATED","code":"134","price":45.85,"category":"tool"},"11":{"name":"test13","code":"135","price":45.85,"category":"tool"},"12":{"name":"test14","code":"136","price":85.14,"category":"book"},"14":{"name":"latest test","code":"137","price":178.25,"category":"staff"},"15":{"name":"latest test","code":"137","price":178.25,"category":"staff"},"16":{"name":"latest test","code":"137","price":178.25,"category":"staff"},"17":{"name":"latest test","code":"137","price":178.25,"category":"staff"},"18":{"name":"latest test","code":"137","price":178.25,"category":"staff"},"19":{"name":"latest test","code":"137","price":178.25,"category":"staff"},"20":{"name":"latest test","code":"137","price":178.25,"category":"staff"},"21":{"name":"latest test","code":"137","price":178.25,"category":"staff"},"22":{"name":"latest test","code":"137","price":178.25,"category":"staff"},"23":{"name":"latest test","code":"137","price":178.25,"category":"staff"},"24":{"name":"latest test","code":"137","price":178.25,"category":"staff"},"25":{"name":"latest test","code":"137","price":178.25,"category":"staff"},"26":{"name":"latest test","code":"137","price":178.25,"category":"staff"},"27":{"name":"latest test2","code":"138","price":178.25,"category":"staff"},"28":{"name":"latest test3","code":"139","price":178.25,"category":"staff"}}

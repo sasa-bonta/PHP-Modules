@@ -2,7 +2,9 @@
 
 namespace Module\ProductModule;
 
-class Product implements \JsonSerializable {
+use JsonSerializable;
+
+class Product implements JsonSerializable {
     private string $name;
     private string $code;
     private float $price;
@@ -15,7 +17,7 @@ class Product implements \JsonSerializable {
      * @param float $price
      * @param string $category
      */
-    public function __construct($name, $code, $price, $category)
+    public function __construct(string $name, string $code, float $price, string $category)
     {
         $this->name = $name;
         $this->code = $code;
@@ -24,7 +26,8 @@ class Product implements \JsonSerializable {
     }
 
 
-    public function jsonSerialize() {
+    public function jsonSerialize(): array
+    {
         return [
             'name' => $this->name,
             'code' => $this->code,
@@ -36,7 +39,7 @@ class Product implements \JsonSerializable {
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -44,7 +47,7 @@ class Product implements \JsonSerializable {
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -52,7 +55,7 @@ class Product implements \JsonSerializable {
     /**
      * @return string
      */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->code;
     }
@@ -60,7 +63,7 @@ class Product implements \JsonSerializable {
     /**
      * @param string $code
      */
-    public function setCode($code)
+    public function setCode(string $code)
     {
         $this->code = $code;
     }
@@ -68,7 +71,7 @@ class Product implements \JsonSerializable {
     /**
      * @return float
      */
-    public function getPrice()
+    public function getPrice(): float
     {
         return $this->price;
     }
@@ -76,7 +79,7 @@ class Product implements \JsonSerializable {
     /**
      * @param float $price
      */
-    public function setPrice($price)
+    public function setPrice(float $price)
     {
         $this->price = $price;
     }
@@ -84,17 +87,13 @@ class Product implements \JsonSerializable {
     /**
      * @return string
      */
-    public function getCategory()
+    public function getCategory(): string
     {
         return $this->category;
     }
 
-    /**
-     * @param string $category
-     */
-    public function setCategory($category)
+    public function fromArray(array $prod): Product
     {
-        $this->category = $category;
+        return new Product((string)$prod['name'], (string)$prod['code'], (float)$prod['price'], (string)$prod['category']);
     }
-
 }

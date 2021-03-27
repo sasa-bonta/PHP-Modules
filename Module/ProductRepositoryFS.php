@@ -4,6 +4,11 @@ namespace Module\ProductModule;
 
 class ProductRepositoryFS implements ProductCatalogServiceInterface
 {
+
+
+    ### Constructor && Destructor
+
+
     private array $contents = [];
 
     /**
@@ -11,92 +16,66 @@ class ProductRepositoryFS implements ProductCatalogServiceInterface
      */
     public function __construct()
     {
-        $this->contents = $this->updateProductsArray();
+        $this->load();
     }
 
+    public function __destruct()
+    {
+        $this->save();
+    }
 
     ### Implemented public functions
 
 
     public function getProductByCode(string $productCode): Product
-    {  # Add ProductNotFoundException
+    {
         $contents = $this->contents;
         $i = array_search($productCode, array_column($contents, 'code'));
 
         if ($i !== FALSE) {
             $prod = $contents[$i];
             return new Product($prod['name'], $prod['code'], $prod['price'], $prod['category']);
-        } else {
-            return NULL;    # @todo ProductNotFoundException
-        }
+        } else throw new ProductNotFoundException("\n---Product Not Found\n");
     }
 
-    # What the Product Collection ???
-    public function searchProduct(SearchCriteria $sc): ProductCollection  // Here would be a good idea to use Decorator Pattern
-    {        # Add SearchCriteriaInvalidPageException and  SearchCriteriaInvalidLimitException
+    public function searchProduct(SearchCriteria $sc): ProductCollection
+    {
         $contents = $this->contents;
-        $arrContain = [];
 
-        # Return all if none is set
-        if (empty($sc->getName()) && empty($sc->getCategory())) {
-            $arrContain = $contents;
+        # Search if name is set
+        if (!empty($sc->getName())) {
+            echo "1\n";
+            $contents = array_filter($contents, fn ($product) => $this->searchByColumn($product, 'name', $sc->getName()));
         }
 
-        # Search if only name is set
-        if (!empty($sc->getName()) && empty($sc->getCategory())) {
-            foreach ($contents as $pr1) {
-                if ($this->searchByColumn($pr1, 'name', $sc->getName())) {
-                    array_push($arrContain, $pr1);
-                }
-            }
+        # Search if category is set
+        if (!empty($sc->getCategory())) {
+            $contents = array_filter($contents, fn ($product) => $this->searchByColumn($product, 'category', $sc->getCategory()));
         }
 
-        # Search if only category is set
-        if (empty($sc->getName()) && !empty($sc->getCategory())) {
-            foreach ($contents as $pr1) {
-                if ($this->searchByColumn($pr1, 'category', $sc->getCategory())) {
-                    array_push($arrContain, $pr1);
-                }
-            }
-        }
+        $offset = ($sc->getPage() - 1) * $sc->getLimit();
+        $contents = array_slice($contents, $offset, $sc->getLimit());
 
-        # Search if both name and category are set
-        if (!empty($sc->getName()) && !empty($sc->getCategory())) {
-            foreach ($contents as $pr1) {
-                if ($this->searchNameCategory($pr1, 'name', $sc->getName(), 'category', $sc->getCategory())) {
-                    array_push($arrContain, $pr1);
-                }
-            }
-        }
+        $contents = array_map([Product::class, 'fromArray'], $contents);
 
-        $start = ($sc->getPage() - 1) * $sc->getLimit();
-        $arrContain = array_slice($arrContain, $start, $sc->getLimit());
-
-        return new ProductCollection($arrContain);
+        return new ProductCollection(...$contents);
     }
 
     public function createProduct(Product $product) : bool
-    { # Add ProductCodeDuplicateException
-
+    {
         if (!($this->isCodePresent($product->getCode()))) {
             $this->addNewProduct($product);
             return TRUE;
-        } else {
-            return FALSE;  # @todo exception
-        }
+        } else throw new ProductCodeDuplicateException("\n---Duplicated code!\n");
     }
 
     public function updateProduct(Product $product):bool
     {
-        # @todo implementation
         if ($this->isCodePresent($product->getCode())) {
             $this->deleteProduct($product->getCode());
             $this->addNewProduct($product);
-            $this->contents = $this->updateProductsArray();
             return TRUE;
-        } else {
-            return false; # @todo exception
-        }
+        } else return false;
     }
 
     public function deleteProductByCode(string $productCode): bool
@@ -104,76 +83,49 @@ class ProductRepositoryFS implements ProductCatalogServiceInterface
         if ($this->isCodePresent($productCode)) {
             $this->deleteProduct($productCode);
             return TRUE;
-        } else {
-            return FALSE;
-        }
+        } else return FALSE;
     }
-
 
     ### Class private functions
 
 
     private function addNewProduct(Product $product)
     {
-        $product = json_encode($product);
-        $fp = fopen('productsFS.file', 'a+');
-        $stat = fstat($fp);
-        ftruncate($fp, $stat['size'] - 1);
-        fwrite($fp, ",");
-        fwrite($fp, $product . "]");
-        fclose($fp);
-        $this->contents = $this->updateProductsArray();
-        #echo "+ new Product : " .$product ."\n";
+        $this->contents[] = $product;
     }
 
     private function isCodePresent(string $code): bool
     {
         $contents = $this->contents;
-        $contents = array_column($contents, 'code');
-        if (in_array($code, $contents, FALSE)) {
-            #echo "not added \n";
-            return TRUE;        ### Add exception
-        } else {
-            #echo "added \n";
-            return FALSE;
-        }
+        $codes = array_column($contents, 'code');
+        if (in_array($code, $codes, FALSE)) return TRUE;
+        else return FALSE; # @todo add exception ?
     }
 
     private function deleteProduct(string $code)
     {
-        $contents = $this->contents;
-        $i = array_search($code, array_column($contents, 'code'));
-        unset($contents[$i]);
-        $contents = json_encode($contents);
-        $fp = fopen("productsFS.file", "w");
-        fwrite($fp, $contents);
-        fclose($fp);
-        $this->contents = $this->updateProductsArray();
+        $i = array_search($code, array_column($this->contents, 'code'));
+        unset($this->contents[$i]);
     }
 
-    private function updateProductsArray()
+    private function load()
     {
         $fp = fopen("productsFS.file", "rb");
         $contents = stream_get_contents($fp);
         fclose($fp);
-        return json_decode($contents, TRUE);
+        $this->contents = json_decode($contents, TRUE);
+    }
+
+    private function save()
+    {
+        $fp = fopen("productsFS.file", "w");
+        fwrite($fp, json_encode($this->contents));
+        fclose($fp);
     }
 
     private function searchByColumn($pr1, string $column, string $name): bool
     {
-        if (strpos($pr1[$column], $name) !== FALSE) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
-    }
-
-    private function searchNameCategory($pr1, string $col1,  string $name, string $col2, string $category): bool
-    {
-        if ($this->searchByColumn($pr1, $col1,  $name) && $this->searchByColumn($pr1, $col2,  $category)) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
+        if (strpos($pr1[$column], $name) !== FALSE) return TRUE;
+        else return FALSE;
     }
 }

@@ -7,15 +7,16 @@ use Module\ProductModule\SearchCriteria;
 require_once '../vendor/autoload.php';
 
 $pr = new ProductRepositoryFS();
-$p1 = new Product("test14", "136", 85.14, "book");
+$p1 = new Product("latest test3", "139", 178.25, "staff");
 $sc = new SearchCriteria();
 
-# Search Product ~ OK should add collection
-$sc->setName('');
-$sc->setCategory('');
-$sc->setPage(2);
-$searchProd = $pr->searchProduct($sc);
-print_r($searchProd->getProductsToDisplay());
+# Search Product OK collection => array object ? ~ OK private attributes displayed
+//$sc->setName('UPDATED');
+//$sc->setCategory('');
+//$sc->setPage();
+//$sc->setLimit();
+//$searchProd = $pr->searchProduct($sc);
+//print_r($searchProd->getProductsToDisplay());
 
 
 # Create Product OK
@@ -47,10 +48,3 @@ print_r($searchProd->getProductsToDisplay());
 //echo $p1->getCode() ."\n";
 //echo $p1->getPrice() ."\n";
 //echo $p1->getCategory() ."\n";
-
-# Test implemented methods OK
-//$pr->getProductByCode($p1->getCode());
-//$pr->searchProduct($sc);
-//$pr->createProduct($p1);
-//$pr->updateProduct($p1);
-//$pr->deleteProductByCode($p1->getCode());

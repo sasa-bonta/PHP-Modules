@@ -4,16 +4,19 @@
 namespace Module\ProductModule;
 
 
-class ProductCollection extends \ArrayObject
+use ArrayObject;
+
+class ProductCollection extends ArrayObject
 {
     private array $productsToDisplay = [];
 
     /**
      * ProductCollection constructor.
-     * @param array $products
+     * @param Product ...$products
      */
-    public function __construct(array $products)
+    public function __construct(Product ...$products)
     {
+        parent::__construct($products);
         $this->productsToDisplay = $products;
     }
 
@@ -32,5 +35,4 @@ class ProductCollection extends \ArrayObject
     {
         $this->productsToDisplay = $productsToDisplay;
     }
-
 }

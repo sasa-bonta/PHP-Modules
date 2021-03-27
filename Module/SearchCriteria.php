@@ -18,8 +18,8 @@ class SearchCriteria
      */
     public function __construct($page = 1, $limit = 10, $name = '', $category = '')
     {
-        $this->page = $page;    # @todo SearchCriteriaInvalidPageException
-        $this->limit = $limit;  # @todo SearchCriteriaInvalidLimitException
+        $this->setPage($page);
+        $this->setLimit($limit);
         $this->name = $name;
         $this->category = $category;
     }
@@ -35,9 +35,10 @@ class SearchCriteria
     /**
      * @param int $page
      */
-    public function setPage($page)    # @todo SearchCriteriaInvalidPageException
+    public function setPage($page = 1)
     {
-        $this->page = $page;
+        if (is_int($page) && $page > 0) $this->page = $page;
+        else throw new SearchCriteriaInvalidPageException("\n---Page must be positive int\n");
     }
 
     /**
@@ -51,9 +52,10 @@ class SearchCriteria
     /**
      * @param int $limit
      */
-    public function setLimit($limit)   # @todo SearchCriteriaInvalidLimitException
+    public function setLimit($limit = 10)
     {
-        $this->limit = $limit;
+        if (is_int($limit) && $limit > 0) $this->limit = $limit;
+        else throw new SearchCriteriaInvalidLimitException("\n---Limit must be positive int\n");
     }
 
     /**
