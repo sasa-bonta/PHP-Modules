@@ -1,6 +1,9 @@
 <?php
 
-namespace Module\ProductModule;
+namespace Module\ProductModule\Domain;
+
+use Module\ProductModule\Domain\Exceptions\SearchCriteriaInvalidLimitException;
+use Module\ProductModule\Domain\Exceptions\SearchCriteriaInvalidPageException;
 
 class SearchCriteria
 {

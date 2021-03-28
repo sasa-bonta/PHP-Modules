@@ -1,13 +1,13 @@
 <?php
 
-use Module\ProductModule\Product;
-use Module\ProductModule\ProductRepositoryFS;
-use Module\ProductModule\SearchCriteria;
+use Module\ProductModule\Domain\Product;
+use Module\ProductModule\Domain\SearchCriteria;
+use Module\ProductModule\Infrastructure\ProductRepositoryFS;
 
-require_once '../vendor/autoload.php';
+require_once '../../vendor/autoload.php';
 
 $pr = new ProductRepositoryFS();
-$p1 = new Product("latest test3", "139", 178.25, "staff");
+$p1 = new Product("latest test3 updated 123", "135", 178.25, "staff");
 $sc = new SearchCriteria();
 
 # Search Product OK collection => array object ? ~ OK private attributes displayed

@@ -1,8 +1,12 @@
 <?php
 
 
-namespace Module\ProductModule;
+namespace Module\ProductModule\Infrastructure;
 
+
+use Module\ProductModule\Domain\Product;
+use Module\ProductModule\Domain\ProductCollection;
+use Module\ProductModule\Domain\SearchCriteria;
 
 interface ProductCatalogRepositoryInterface
 {

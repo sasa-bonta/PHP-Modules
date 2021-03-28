@@ -1,6 +1,10 @@
 <?php
 
-namespace Module\ProductModule;
+namespace Module\ProductModule\App;
+
+use Module\ProductModule\Domain\Product;
+use Module\ProductModule\Domain\ProductCollection;
+use Module\ProductModule\Domain\SearchCriteria;
 
 interface ProductCatalogServiceInterface {
 

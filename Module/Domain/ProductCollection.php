@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Module\ProductModule;
+namespace Module\ProductModule\Domain;
 
 
 use ArrayObject;

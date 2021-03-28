@@ -1,8 +1,15 @@
 <?php
 
 
-namespace Module\ProductModule;
+namespace Module\ProductModule\App;
 
+
+use Module\ProductModule\Domain\Exceptions\ProductCodeDuplicateException;
+use Module\ProductModule\Domain\Exceptions\ProductNotFoundException;
+use Module\ProductModule\Domain\Product;
+use Module\ProductModule\Domain\ProductCollection;
+use Module\ProductModule\Domain\SearchCriteria;
+use Module\ProductModule\Infrastructure\ProductRepositoryFS;
 
 class ProductService implements ProductCatalogServiceInterface
 {

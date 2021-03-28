@@ -1,6 +1,13 @@
 <?php
 
-namespace Module\ProductModule;
+namespace Module\ProductModule\Infrastructure;
+
+use Module\ProductModule\Domain\Exceptions\ProductCodeDuplicateException;
+use Module\ProductModule\Domain\Exceptions\ProductNotFoundException;
+use Module\ProductModule\Domain\Product;
+use Module\ProductModule\Domain\ProductCollection;
+use Module\ProductModule\Domain\SearchCriteria;
+use function array_splice;
 
 class ProductRepositoryFS implements ProductCatalogRepositoryInterface
 {
@@ -101,12 +108,12 @@ class ProductRepositoryFS implements ProductCatalogRepositoryInterface
     private function deleteProduct(string $code)
     {
         $i = array_search($code, array_column($this->contents, 'code'));
-        unset($this->contents[$i]);
+        array_splice($this->contents, $i);
     }
 
     private function load()
     {
-        $fp = fopen("productsFS.file", "rb");
+        $fp = fopen("/home/abonta/PhpstormProjects/PHP-Modules/Module/Infrastructure/productsFS.file", "rb");
         $contents = stream_get_contents($fp);
         fclose($fp);
         $this->contents = json_decode($contents, TRUE);
@@ -114,7 +121,7 @@ class ProductRepositoryFS implements ProductCatalogRepositoryInterface
 
     private function save()
     {
-        $fp = fopen("productsFS.file", "w");
+        $fp = fopen("/home/abonta/PhpstormProjects/PHP-Modules/Module/Infrastructure/productsFS.file", "w");
         fwrite($fp, json_encode($this->contents));
         fclose($fp);
     }

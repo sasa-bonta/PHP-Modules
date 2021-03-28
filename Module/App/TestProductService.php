@@ -1,43 +1,44 @@
 <?php
+// composer dump-autoload -o
 
-use Module\ProductModule\Product;
-use Module\ProductModule\ProductService;
-use Module\ProductModule\SearchCriteria;
+use Module\ProductModule\App\ProductService;
+use Module\ProductModule\Domain\Product;
+use Module\ProductModule\Domain\SearchCriteria;
 
-require_once '../vendor/autoload.php';
+require_once '../../vendor/autoload.php';
 
-$pr = new ProductService();
-$p1 = new Product("latest test3", "139", 178.25, "staff");
+$ps = new ProductService();
+$p1 = new Product("latest test3 updated again 123", "135", 178.25, "staff");
 $sc = new SearchCriteria();
 
 # Search Product OK collection => array object ? ~ OK private attributes displayed
-//$sc->setName('UPDATED');
+//$sc->setName('test1');
 //$sc->setCategory('');
 //$sc->setPage();
 //$sc->setLimit();
-//$searchProd = $pr->searchProduct($sc);
+//$searchProd = $ps->searchProduct($sc);
 //print_r($searchProd->getProductsToDisplay());
 
 
 # Create Product OK
-//$ptest = $pr->createProduct($p1);
+//$ptest = $ps->createProduct($p1);
 //if (!$ptest) echo "False\n";
 //else echo "True\n";
 
 
 # Get Product by code OK
-//$p1 = $pr->getProductByCode($p1->getCode());
+//$p1 = $ps->getProductByCode($p1->getCode());
 //print_r($p1);
 
 
-# Delete Product OK
-//$ptest = $pr->deleteProductByCode($p1->getCode());
+# Delete Product
+//$ptest = $ps->deleteProductByCode($p1->getCode());
 //if (!$ptest) echo "False\n";
 //else echo "True\n";
 
 
 # Update Product OK
-//$ptest = $pr->updateProduct($p1);
+//$ptest = $ps->updateProduct($p1);
 //if (!$ptest) echo "False\n";
 //else echo "True\n";
 
