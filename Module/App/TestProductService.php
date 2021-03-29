@@ -12,10 +12,10 @@ $p1 = new Product("latest test3 updated again 123", "135", 178.25, "staff");
 $sc = new SearchCriteria();
 
 # Search Product OK collection => array object ? ~ OK private attributes displayed
-//$sc->setName('test1');
-//$sc->setCategory('');
-//$sc->setPage();
-//$sc->setLimit();
+//$sc->setName('test1')
+//   ->setCategory('')
+//   ->setPage()
+//    ->setLimit();
 //$searchProd = $ps->searchProduct($sc);
 //print_r($searchProd->getProductsToDisplay());
 
