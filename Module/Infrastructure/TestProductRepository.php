@@ -7,14 +7,14 @@ use Module\ProductModule\Infrastructure\ProductRepositoryFS;
 require_once '../../vendor/autoload.php';
 
 $pr = new ProductRepositoryFS();
-$p1 = new Product("latest test3 updated 123", "135", 178.25, "staff");
+$p1 = new Product("the most latest test", "135", 178.25, "staff");
 $sc = new SearchCriteria();
 
-# Search Product OK collection => array object ? ~ OK private attributes displayed
-//$sc->setName('UPDATED');
-//$sc->setCategory('');
-//$sc->setPage();
-//$sc->setLimit();
+# Search Product OK
+//$sc->setName('UPDATED')
+//    ->setCategory('')
+//    ->setPage()
+//    ->setLimit();
 //$searchProd = $pr->searchProduct($sc);
 //print_r($searchProd->getProductsToDisplay());
 

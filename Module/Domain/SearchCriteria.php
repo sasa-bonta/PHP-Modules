@@ -41,7 +41,8 @@ class SearchCriteria
     public function setPage($page = 1)
     {
         if (is_int($page) && $page > 0) $this->page = $page;
-        else throw new SearchCriteriaInvalidPageException("\n---Page must be positive int\n");
+        else throw new SearchCriteriaInvalidPageException("---Page must be positive int");
+        return $this;
     }
 
     /**
@@ -58,7 +59,8 @@ class SearchCriteria
     public function setLimit($limit = 10)
     {
         if (is_int($limit) && $limit > 0) $this->limit = $limit;
-        else throw new SearchCriteriaInvalidLimitException("\n---Limit must be positive int\n");
+        else throw new SearchCriteriaInvalidLimitException("---Limit must be positive int");
+        return $this;
     }
 
     /**
@@ -75,6 +77,7 @@ class SearchCriteria
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
     }
 
     /**
@@ -91,6 +94,7 @@ class SearchCriteria
     public function setCategory($category)
     {
         $this->category = $category;
+        return $this;
     }
 
 

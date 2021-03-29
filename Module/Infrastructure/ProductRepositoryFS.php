@@ -38,7 +38,7 @@ class ProductRepositoryFS implements ProductCatalogRepositoryInterface
         if ($i !== FALSE) {
             $prod = $contents[$i];
             return new Product($prod['name'], $prod['code'], $prod['price'], $prod['category']);
-        } else throw new ProductNotFoundException("\n---Product Not Found! Repo\n");
+        } else throw new ProductNotFoundException("---Product Not Found! Repo");
     }
 
     public function searchProduct(SearchCriteria $sc): ProductCollection
@@ -69,14 +69,14 @@ class ProductRepositoryFS implements ProductCatalogRepositoryInterface
         if (!($this->isCodePresent($product->getCode()))) {
             $this->addNewProduct($product);
             return TRUE;
-        } else throw new ProductCodeDuplicateException("\n---Duplicated code! Repo\n");
+        } else throw new ProductCodeDuplicateException("---Duplicated code! Repo");
     }
 
     public function updateProduct(Product $product):bool
     {
         if ($this->isCodePresent($product->getCode())) {
-            $this->deleteProduct($product->getCode());
-            $this->addNewProduct($product);
+            $this->deleteProduct($product->getCode())
+                 ->addNewProduct($product);
             return TRUE;
         } else return false;
     }
@@ -95,6 +95,7 @@ class ProductRepositoryFS implements ProductCatalogRepositoryInterface
     private function addNewProduct(Product $product)
     {
         $this->contents[] = $product;
+        return $this;
     }
 
     private function isCodePresent(string $code): bool
@@ -109,6 +110,8 @@ class ProductRepositoryFS implements ProductCatalogRepositoryInterface
     {
         $i = array_search($code, array_column($this->contents, 'code'));
         array_splice($this->contents, $i);
+
+        return $this;
     }
 
     private function load()

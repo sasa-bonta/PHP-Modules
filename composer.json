@@ -6,7 +6,9 @@
             "email": "bonta2000@mail.ru"
         }
     ],
-    "require": {},
+    "require": {
+      "ext-json": "*"
+    },
     "description": "First Module",
     "autoload": {
         "psr-4": {
@@ -14,3 +16,4 @@
         }
     }
 }
+
