@@ -4,8 +4,6 @@
 namespace Module\ProductModule\App;
 
 
-use Module\ProductModule\Domain\Exceptions\ProductCodeDuplicateException;
-use Module\ProductModule\Domain\Exceptions\ProductNotFoundException;
 use Module\ProductModule\Domain\Product;
 use Module\ProductModule\Domain\ProductCollection;
 use Module\ProductModule\Domain\SearchCriteria;
@@ -29,11 +27,7 @@ class ProductService implements ProductCatalogServiceInterface
 
     public function getProductByCode(string $productCode): Product
     {
-        try {
-            return $this->pr->getProductByCode($productCode);
-        } catch (ProductNotFoundException $e) {
-            throw new ProductNotFoundException("\n---Duplicated code! Service\n");
-        }
+        return $this->pr->getProductByCode($productCode);
     }
 
     public function searchProduct(SearchCriteria $sc): ProductCollection
@@ -43,12 +37,7 @@ class ProductService implements ProductCatalogServiceInterface
 
     public function createProduct(Product $product): bool
     {
-        try {
-            return $this->pr->createProduct($product);
-        } catch (ProductCodeDuplicateException $e) {
-            throw new ProductCodeDuplicateException("\n---Duplicated code! Service\n");
-        }
-
+        return $this->pr->createProduct($product);
     }
 
     public function updateProduct(Product $product): bool
